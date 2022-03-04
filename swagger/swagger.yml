@@ -1,0 +1,19 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Clean Architecture Server
+  description: clean-architecture-swagger
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - "http"
+host: localhost:3000
+basePath: /
+tags:
+  - name: "hello"
+    description: こんにちは
+paths:
+  /get-hello:
+    $ref: ./sub_system/business/screen/get_hello.yml

@@ -1,0 +1,8 @@
+{
+  "yaml.schemas": {
+    "https://raw.githubusercontent.com/kogosoftwarellc/open-api/master/packages/openapi-schema-validator/resources/openapi-2.0.json": [
+      "swagger/*.yaml",
+      "swagger/*.yml"
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+HelloList:
+  type: "array"
+  items:
+    $ref: "#/Hello"
+Hello:
+  type: "object"
+  properties:
+    id:
+      type: "integer"
+      format: "int32"
+    greet:
+      type: "string"
+      example: "こんにちは"
+    date:
+      type: "string"
+      format: "date"
+      example: "2022-02-24"

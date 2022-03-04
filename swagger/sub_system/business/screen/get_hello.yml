@@ -1,0 +1,10 @@
+get:
+  summary: こんにちは取得
+  tags:
+    - "hello"
+  operationId: getGreeting
+  responses:
+    200:
+      description: returns a greeting
+      schema:
+        $ref: "./definitions.yml#/HelloList"

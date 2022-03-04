@@ -1,0 +1,43 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "swagger.ymlからgenerateファイルを生成する",
+      "detail": "swagger generate",
+      "type": "shell",
+      "command": "swagger generate server -t gen -f ./swagger/swagger.yml --exclude-main"
+    },
+    {
+      "label": "swagger.mdを作成する",
+      "detail": "swagger markdown generate",
+      "type": "shell",
+      "command": "swagger generate markdown -t gen -f ./swagger/swagger.yml --output=./swagger/swagger.md"
+    },
+    {
+      "label": "swagger.ymlのvalidateをチェックする",
+      "detail": "swagger validate",
+      "type": "shell",
+      "command": "swagger validate ./swagger/swagger_flatten.yml"
+    },
+    {
+      "label": "swagger.ymlの$refを展開（一つのファイルにマージ）する",
+      "detail": "swagger flatten",
+      "type": "shell",
+      "command": "swagger flatten ./swagger/swagger.yml -o=./swagger/swagger_flatten.yml --format=yaml"
+    },
+    {
+      "label": "swaggerコマンドを全て実行する",
+      "detail": "swagger generate + swagger markdown generate + swagger flatten",
+      "type": "shell",
+      "command": "echo swagger.yamlからgenerateしてmarkdownとマージファイルを作成しました",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "swagger.ymlからgenerateファイルを生成する",
+        "swagger.mdを作成する",
+        "swagger.ymlの$refを展開（一つのファイルにマージ）する"
+      ]
+    }
+  ]
+}
