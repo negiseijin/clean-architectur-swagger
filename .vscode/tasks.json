@@ -38,6 +38,12 @@
         "swagger.mdを作成する",
         "swagger.ymlの$refを展開（一つのファイルにマージ）する"
       ]
+    },
+    {
+      "label": "モックを生成する。（生成するmock元のファイルを開いて実行して下さい。）",
+      "detail": "mockgen -source",
+      "type": "shell",
+      "command": "mockgen -source=${relativeFile} -destination=.\\mock\\${relativeFileDirname}\\mock_${fileBasename}"
     }
   ]
 }
