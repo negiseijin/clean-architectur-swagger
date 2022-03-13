@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: docker/postgres/Dockerfile
+    container_name: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+      - ./docker/postgres/initdb:/docker-entrypoint-initdb.d
+    env_file:
+      - ./.env
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    restart: always
+
+  pgadmin:
+    build:
+      context: .
+      dockerfile: ./docker/pgadmin4/Dockerfile
+      args:
+        - PGADMIN4_VERSION=${PGADMIN4_VERSION}
+    image: dpage/pgadmin4:${PGADMIN4_VERSION}-custom
+    container_name: pgadmin4
+    volumes:
+      - ./data/pgadmin:/var/lib/pgadmin
+    env_file:
+      - ./.env
+    ports:
+      - "${PGADMIN_PORT}:80"
+    depends_on:
+      - db
+    restart: always
+
+volumes:
+  data:
