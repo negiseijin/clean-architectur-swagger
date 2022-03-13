@@ -1,0 +1,10 @@
+get:
+  summary: todo取得
+  tags:
+    - "todo"
+  operationId: getTodoList
+  responses:
+    200:
+      description: todoを取得します
+      schema:
+        $ref: "./definitions.yml#/TodoList"

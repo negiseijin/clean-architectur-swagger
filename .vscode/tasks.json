@@ -19,7 +19,7 @@
       "label": "swagger.ymlのvalidateをチェックする",
       "detail": "swagger validate",
       "type": "shell",
-      "command": "swagger validate ./swagger/swagger_flatten.yml"
+      "command": "swagger validate ./swagger/swagger.yml"
     },
     {
       "label": "swagger.ymlの$refを展開（一つのファイルにマージ）する",

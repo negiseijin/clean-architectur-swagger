@@ -14,13 +14,13 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// HelloList hello list
+// UpdateTodoList TODO更新リスト
 //
-// swagger:model helloList
-type HelloList []*Hello
+// swagger:model updateTodoList
+type UpdateTodoList []*UpdateTodo
 
-// Validate validates this hello list
-func (m HelloList) Validate(formats strfmt.Registry) error {
+// Validate validates this update todo list
+func (m UpdateTodoList) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	for i := 0; i < len(m); i++ {
@@ -47,8 +47,8 @@ func (m HelloList) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validate this hello list based on the context it is used
-func (m HelloList) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this update todo list based on the context it is used
+func (m UpdateTodoList) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	for i := 0; i < len(m); i++ {

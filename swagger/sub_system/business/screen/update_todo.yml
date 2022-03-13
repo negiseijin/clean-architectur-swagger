@@ -1,0 +1,15 @@
+put:
+  tags:
+    - "todo"
+  summary: "todo更新"
+  operationId: "updateTodo"
+  parameters:
+    - in: "body"
+      name: "body"
+      description: "todo更新パラメーター"
+      required: true
+      schema:
+        $ref: "./definitions.yml#/UpdateTodo"
+  responses:
+    "200":
+      description: "todoを更新しました"

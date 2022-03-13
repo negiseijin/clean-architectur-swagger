@@ -1,5 +1,8 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,go
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,go
+# Created by https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,dotenv
+# Edit at https://www.toptal.com/developers/gitignore?templates=go,visualstudiocode,dotenv
+
+### dotenv ###
+.env
 
 ### Go ###
 # If you prefer the allow list template instead of the deny list, see community template:
@@ -49,4 +52,4 @@ go.work
 
 # Support for Project snippet scope
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,go
+# End of https://www.toptal.com/developers/gitignore/api/go,visualstudiocode,dotenv

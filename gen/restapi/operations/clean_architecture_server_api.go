@@ -19,7 +19,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/negiseijin/clean-architectur-swagger/gen/restapi/operations/hello"
+	"github.com/negiseijin/clean-architectur-swagger/gen/restapi/operations/todo"
 )
 
 // NewCleanArchitectureServerAPI creates a new CleanArchitectureServer instance
@@ -44,8 +44,20 @@ func NewCleanArchitectureServerAPI(spec *loads.Document) *CleanArchitectureServe
 
 		JSONProducer: runtime.JSONProducer(),
 
-		HelloGetGreetingHandler: hello.GetGreetingHandlerFunc(func(params hello.GetGreetingParams) middleware.Responder {
-			return middleware.NotImplemented("operation hello.GetGreeting has not yet been implemented")
+		TodoCreateTodoHandler: todo.CreateTodoHandlerFunc(func(params todo.CreateTodoParams) middleware.Responder {
+			return middleware.NotImplemented("operation todo.CreateTodo has not yet been implemented")
+		}),
+		TodoGetTodoHandler: todo.GetTodoHandlerFunc(func(params todo.GetTodoParams) middleware.Responder {
+			return middleware.NotImplemented("operation todo.GetTodo has not yet been implemented")
+		}),
+		TodoGetTodoListHandler: todo.GetTodoListHandlerFunc(func(params todo.GetTodoListParams) middleware.Responder {
+			return middleware.NotImplemented("operation todo.GetTodoList has not yet been implemented")
+		}),
+		TodoUpdateTodoHandler: todo.UpdateTodoHandlerFunc(func(params todo.UpdateTodoParams) middleware.Responder {
+			return middleware.NotImplemented("operation todo.UpdateTodo has not yet been implemented")
+		}),
+		TodoUpdateTodoListHandler: todo.UpdateTodoListHandlerFunc(func(params todo.UpdateTodoListParams) middleware.Responder {
+			return middleware.NotImplemented("operation todo.UpdateTodoList has not yet been implemented")
 		}),
 	}
 }
@@ -83,8 +95,16 @@ type CleanArchitectureServerAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
-	// HelloGetGreetingHandler sets the operation handler for the get greeting operation
-	HelloGetGreetingHandler hello.GetGreetingHandler
+	// TodoCreateTodoHandler sets the operation handler for the create todo operation
+	TodoCreateTodoHandler todo.CreateTodoHandler
+	// TodoGetTodoHandler sets the operation handler for the get todo operation
+	TodoGetTodoHandler todo.GetTodoHandler
+	// TodoGetTodoListHandler sets the operation handler for the get todo list operation
+	TodoGetTodoListHandler todo.GetTodoListHandler
+	// TodoUpdateTodoHandler sets the operation handler for the update todo operation
+	TodoUpdateTodoHandler todo.UpdateTodoHandler
+	// TodoUpdateTodoListHandler sets the operation handler for the update todo list operation
+	TodoUpdateTodoListHandler todo.UpdateTodoListHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -162,8 +182,20 @@ func (o *CleanArchitectureServerAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.HelloGetGreetingHandler == nil {
-		unregistered = append(unregistered, "hello.GetGreetingHandler")
+	if o.TodoCreateTodoHandler == nil {
+		unregistered = append(unregistered, "todo.CreateTodoHandler")
+	}
+	if o.TodoGetTodoHandler == nil {
+		unregistered = append(unregistered, "todo.GetTodoHandler")
+	}
+	if o.TodoGetTodoListHandler == nil {
+		unregistered = append(unregistered, "todo.GetTodoListHandler")
+	}
+	if o.TodoUpdateTodoHandler == nil {
+		unregistered = append(unregistered, "todo.UpdateTodoHandler")
+	}
+	if o.TodoUpdateTodoListHandler == nil {
+		unregistered = append(unregistered, "todo.UpdateTodoListHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -253,10 +285,26 @@ func (o *CleanArchitectureServerAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/create-todo"] = todo.NewCreateTodo(o.context, o.TodoCreateTodoHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/get-hello"] = hello.NewGetGreeting(o.context, o.HelloGetGreetingHandler)
+	o.handlers["GET"]["/get-todo/{todoId}"] = todo.NewGetTodo(o.context, o.TodoGetTodoHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/get-todo"] = todo.NewGetTodoList(o.context, o.TodoGetTodoListHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/update-todo/{todoId}"] = todo.NewUpdateTodo(o.context, o.TodoUpdateTodoHandler)
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/update-todo"] = todo.NewUpdateTodoList(o.context, o.TodoUpdateTodoListHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

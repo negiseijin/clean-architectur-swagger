@@ -11,7 +11,10 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 
 	"github.com/negiseijin/clean-architectur-swagger/gen/restapi/operations"
-	"github.com/negiseijin/clean-architectur-swagger/gen/restapi/operations/hello"
+	"github.com/negiseijin/clean-architectur-swagger/gen/restapi/operations/todo"
+	"github.com/negiseijin/clean-architectur-swagger/handler"
+	"github.com/negiseijin/clean-architectur-swagger/infrastructure"
+	"github.com/negiseijin/clean-architectur-swagger/infrastructure/persistence"
 )
 
 //go:generate swagger generate server --target ../../gen --name CleanArchitectureServer --spec ../../swagger/swagger.yml --principal interface{} --exclude-main
@@ -38,9 +41,29 @@ func configureAPI(api *operations.CleanArchitectureServerAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.HelloGetGreetingHandler == nil {
-		api.HelloGetGreetingHandler = hello.GetGreetingHandlerFunc(func(params hello.GetGreetingParams) middleware.Responder {
-			return middleware.NotImplemented("operation hello.GetGreeting has not yet been implemented")
+	// DB Settting
+	db := infrastructure.NewDevelopmentDB()
+	db.NewDB()
+
+	th := handler.NewTodoHandler(persistence.DBRepository{
+		DB: db.Connection,
+	})
+
+	if api.TodoGetTodoListHandler != nil {
+		api.TodoGetTodoListHandler = todo.GetTodoListHandlerFunc(func(params todo.GetTodoListParams) middleware.Responder {
+			return th.GetTodoListHandler(params)
+		})
+	}
+
+	if api.TodoGetTodoHandler != nil {
+		api.TodoGetTodoHandler = todo.GetTodoHandlerFunc(func(params todo.GetTodoParams) middleware.Responder {
+			return th.GetTodoHandler(params)
+		})
+	}
+
+	if api.TodoCreateTodoHandler != nil {
+		api.TodoCreateTodoHandler = todo.CreateTodoHandlerFunc(func(params todo.CreateTodoParams) middleware.Responder {
+			return th.PostTodoHandler(params)
 		})
 	}
 

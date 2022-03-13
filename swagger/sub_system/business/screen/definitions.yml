@@ -1,17 +1,58 @@
-HelloList:
+TodoList:
   type: "array"
+  description: TODOリスト
   items:
-    $ref: "#/Hello"
-Hello:
+    $ref: "#/Todo"
+Todo:
   type: "object"
+  description: TODO
   properties:
     id:
-      type: "integer"
-      format: "int32"
-    greet:
       type: "string"
-      example: "こんにちは"
-    date:
+      description: id
+      format: "uuid"
+      example: 96c4b7d9-1849-4f6d-b616-06076af3da6e
+    name:
+      type: "string"
+      description: TODO名
+      example: "TODO名"
+    done:
+      type: "boolean"
+      default: false
+      description: 完了
+      example: false
+    createdAt:
       type: "string"
       format: "date"
+      description: 作成日
       example: "2022-02-24"
+    updatedAt:
+      type: "string"
+      format: "date"
+      description: 更新日
+      example: "2022-02-24"
+CreateTodo:
+  type: "object"
+  description: TODO作成
+  properties:
+    name:
+      type: "string"
+      description: TODO名
+      example: "TODO名"
+UpdateTodoList:
+  type: "array"
+  description: TODO更新リスト
+  items:
+    $ref: "#/UpdateTodo"
+UpdateTodo:
+  type: "object"
+  description: TODO更新
+  properties:
+    name:
+      type: "string"
+      description: TODO名
+      example: "TODO名"
+    done:
+      type: "boolean"
+      description: 完了
+      example: false

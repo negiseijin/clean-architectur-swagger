@@ -12,35 +12,142 @@ info:
 host: localhost:3000
 basePath: /
 paths:
-  /get-hello:
+  /create-todo:
+    post:
+      tags:
+      - todo
+      summary: todo作成
+      operationId: createTodo
+      parameters:
+      - description: todo作成パラメーター
+        name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/createTodo'
+      responses:
+        "201":
+          description: todoを作成しました
+  /get-todo:
     get:
       tags:
-      - hello
-      summary: こんにちは取得
-      operationId: getGreeting
+      - todo
+      summary: todo取得
+      operationId: getTodoList
       responses:
         "200":
-          description: returns a greeting
+          description: todoを取得します
           schema:
-            $ref: '#/definitions/helloList'
+            $ref: '#/definitions/todoList'
+  /get-todo/{todoId}:
+    get:
+      tags:
+      - todo
+      summary: todo取得
+      operationId: getTodo
+      parameters:
+      - type: string
+        format: uuid
+        description: ID of todo to return
+        name: todoId
+        in: path
+        required: true
+      responses:
+        "200":
+          description: todoを取得します
+          schema:
+            $ref: '#/definitions/todo'
+  /update-todo:
+    put:
+      tags:
+      - todo
+      summary: todo更新
+      operationId: updateTodoList
+      parameters:
+      - description: todo更新パラメーター
+        name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/updateTodoList'
+      responses:
+        "200":
+          description: todoを更新しました
+  /update-todo/{todoId}:
+    put:
+      tags:
+      - todo
+      summary: todo更新
+      operationId: updateTodo
+      parameters:
+      - description: todo更新パラメーター
+        name: body
+        in: body
+        required: true
+        schema:
+          $ref: '#/definitions/updateTodo'
+      responses:
+        "200":
+          description: todoを更新しました
 definitions:
-  hello:
+  createTodo:
+    description: TODO作成
     type: object
     properties:
-      date:
+      name:
+        description: TODO名
+        type: string
+        example: TODO名
+  todo:
+    description: TODO
+    type: object
+    properties:
+      createdAt:
+        description: 作成日
         type: string
         format: date
         example: "2022-02-24"
-      greet:
-        type: string
-        example: こんにちは
+      done:
+        description: 完了
+        type: boolean
+        default: false
+        example: false
       id:
-        type: integer
-        format: int32
-  helloList:
+        description: id
+        type: string
+        format: uuid
+        example: 96c4b7d9-1849-4f6d-b616-06076af3da6e
+      name:
+        description: TODO名
+        type: string
+        example: TODO名
+      updatedAt:
+        description: 更新日
+        type: string
+        format: date
+        example: "2022-02-24"
+  todoList:
+    description: TODOリスト
     type: array
     items:
-      $ref: '#/definitions/hello'
+      $ref: '#/definitions/todo'
+  updateTodo:
+    description: TODO更新
+    type: object
+    properties:
+      done:
+        description: 完了
+        type: boolean
+        example: false
+      name:
+        description: TODO名
+        type: string
+        example: TODO名
+  updateTodoList:
+    description: TODO更新リスト
+    type: array
+    items:
+      $ref: '#/definitions/updateTodo'
 tags:
-- description: こんにちは
-  name: hello
+- description: todo
+  name: todo

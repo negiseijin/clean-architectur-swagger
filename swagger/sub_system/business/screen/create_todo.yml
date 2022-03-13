@@ -1,0 +1,15 @@
+post:
+  tags:
+    - "todo"
+  summary: "todo作成"
+  operationId: "createTodo"
+  parameters:
+    - in: "body"
+      name: "body"
+      description: "todo作成パラメーター"
+      required: true
+      schema:
+        $ref: "./definitions.yml#/CreateTodo"
+  responses:
+    "201":
+      description: "todoを作成しました"

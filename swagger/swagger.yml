@@ -12,8 +12,16 @@ schemes:
 host: localhost:3000
 basePath: /
 tags:
-  - name: "hello"
-    description: こんにちは
+  - name: "todo"
+    description: todo
 paths:
-  /get-hello:
-    $ref: ./sub_system/business/screen/get_hello.yml
+  /get-todo:
+    $ref: ./sub_system/business/screen/get_todo_list.yml
+  /get-todo/{todoId}:
+    $ref: ./sub_system/business/screen/get_todo.yml
+  /create-todo:
+    $ref: ./sub_system/business/screen/create_todo.yml
+  /update-todo:
+    $ref: ./sub_system/business/screen/update_todo_list.yml
+  /update-todo/{todoId}:
+    $ref: ./sub_system/business/screen/update_todo.yml
