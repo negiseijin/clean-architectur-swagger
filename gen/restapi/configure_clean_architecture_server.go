@@ -15,6 +15,7 @@ import (
 	"github.com/negiseijin/clean-architectur-swagger/handler"
 	"github.com/negiseijin/clean-architectur-swagger/infrastructure"
 	"github.com/negiseijin/clean-architectur-swagger/infrastructure/persistence"
+	"github.com/negiseijin/clean-architectur-swagger/migration"
 )
 
 //go:generate swagger generate server --target ../../gen --name CleanArchitectureServer --spec ../../swagger/swagger.yml --principal interface{} --exclude-main
@@ -44,6 +45,9 @@ func configureAPI(api *operations.CleanArchitectureServerAPI) http.Handler {
 	// DB Settting
 	db := infrastructure.NewDevelopmentDB()
 	db.NewDB()
+
+	m := migration.NewMigration(db.Connection)
+	m.TodoMigrate()
 
 	th := handler.NewTodoHandler(persistence.DBRepository{
 		DB: db.Connection,

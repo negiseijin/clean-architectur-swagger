@@ -16,7 +16,7 @@ type TodoUsecase interface {
 }
 
 type todoUsecase struct {
-	Repo persistence.DBRepository
+	Repo repository.DBRepository
 }
 
 // CreateTodo implements repository.TodoRepository
@@ -39,7 +39,7 @@ func (u *todoUsecase) DeleteTodo(item interface{}) error {
 
 // FindTodo implements repository.TodoRepository
 func (u *todoUsecase) FindTodo(params todo.GetTodoParams, item interface{}) error {
-	query := u.Repo.DB.Where("id = ?", params.TodoID)
+	query := map[string]interface{}{"id": params.TodoID}
 	err := u.Repo.Find(model.Todo{}, query, item)
 	if err != nil {
 		return err
@@ -67,7 +67,6 @@ func (u *todoUsecase) UpdateTodo(item interface{}) error {
 
 func NewTodoUsecase(repo persistence.DBRepository) repository.TodoRepository {
 	todoUsecase := todoUsecase{
-		Repo: repo,
-	}
+		Repo: persistence.NewDBRepository(repo.DB)}
 	return &todoUsecase
 }
