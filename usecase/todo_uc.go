@@ -1,8 +1,12 @@
 package usecase
 
 import (
+	"time"
+
+	"github.com/google/uuid"
 	"github.com/negiseijin/clean-architectur-swagger/domain/model"
 	"github.com/negiseijin/clean-architectur-swagger/domain/repository"
+	"github.com/negiseijin/clean-architectur-swagger/gen/models"
 	"github.com/negiseijin/clean-architectur-swagger/gen/restapi/operations/todo"
 	"github.com/negiseijin/clean-architectur-swagger/infrastructure/persistence"
 )
@@ -21,7 +25,19 @@ type todoUsecase struct {
 
 // CreateTodo implements repository.TodoRepository
 func (u *todoUsecase) CreateTodo(item interface{}) error {
-	err := u.Repo.Create(model.Todo{}, item)
+	t := item.(*models.CreateTodo)
+	value := &model.Todo{
+		Base: model.Base{
+			ID:        uuid.New(),
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+			// DeletedAt: ,
+		},
+		Name: t.Name,
+		Done: false,
+	}
+
+	err := u.Repo.Create(model.Todo{}, value)
 	if err != nil {
 		return err
 	}
@@ -67,6 +83,7 @@ func (u *todoUsecase) UpdateTodo(item interface{}) error {
 
 func NewTodoUsecase(repo persistence.DBRepository) repository.TodoRepository {
 	todoUsecase := todoUsecase{
-		Repo: persistence.NewDBRepository(repo.DB)}
+		Repo: persistence.NewDBRepository(repo.DB),
+	}
 	return &todoUsecase
 }

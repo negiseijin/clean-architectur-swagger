@@ -1,11 +1,7 @@
 package handler
 
 import (
-	"time"
-
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/go-openapi/strfmt"
-	"github.com/google/uuid"
 	"github.com/negiseijin/clean-architectur-swagger/gen/models"
 	"github.com/negiseijin/clean-architectur-swagger/gen/restapi/operations/todo"
 	"github.com/negiseijin/clean-architectur-swagger/infrastructure/persistence"
@@ -26,14 +22,7 @@ type todoHandler struct {
 
 // PostTodoHandler implements TodoHandler
 func (th *todoHandler) PostTodoHandler(params todo.CreateTodoParams) middleware.Responder {
-	req := models.Todo{
-		CreatedAt: strfmt.Date(time.Now()),
-		Done:      new(bool),
-		ID:        strfmt.UUID(uuid.NewString()),
-		Name:      params.Body.Name,
-		UpdatedAt: strfmt.Date(time.Now()),
-	}
-	th.Usecase.CreateTodo(req)
+	th.Usecase.CreateTodo(params.Body)
 	return todo.NewCreateTodoCreated()
 }
 

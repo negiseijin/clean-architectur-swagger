@@ -47,11 +47,13 @@ func configureAPI(api *operations.CleanArchitectureServerAPI) http.Handler {
 	db.NewDB()
 
 	m := migration.NewMigration(db.Connection)
-	m.TodoMigrate()
+	m.Migrate()
 
-	th := handler.NewTodoHandler(persistence.DBRepository{
-		DB: db.Connection,
-	})
+	th := handler.NewTodoHandler(
+		persistence.DBRepository{
+			DB: db.Connection,
+		},
+	)
 
 	if api.TodoGetTodoListHandler != nil {
 		api.TodoGetTodoListHandler = todo.GetTodoListHandlerFunc(func(params todo.GetTodoListParams) middleware.Responder {

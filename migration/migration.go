@@ -11,6 +11,12 @@ type Migration struct {
 	Repo repository.DBRepository
 }
 
+// Migrate implements repository.MigrationRepository
+func (m *Migration) Migrate() error {
+	m.TodoMigrate()
+	return nil
+}
+
 // TodoMigrate implements repository.MigrationRepository
 func (m *Migration) TodoMigrate() error {
 	item := model.Todo{}
@@ -21,8 +27,9 @@ func (m *Migration) TodoMigrate() error {
 	return nil
 }
 
-func NewMigration(DB *gorm.DB) repository.MigrationRepository {
+func NewMigration(db *gorm.DB) repository.MigrationRepository {
 	migration := Migration{
-		Repo: persistence.NewDBRepository(DB)}
+		Repo: persistence.NewDBRepository(db),
+	}
 	return &migration
 }
