@@ -46,12 +46,12 @@ func configureAPI(api *operations.CleanArchitectureServerAPI) http.Handler {
 	db := infrastructure.NewDevelopmentDB()
 	db.NewDB()
 
-	m := migration.NewMigration(db.Connection)
+	m := migration.NewMigration(db.Connect())
 	m.Migrate()
 
 	th := handler.NewTodoHandler(
 		persistence.DBRepository{
-			DB: db.Connection,
+			DB: db.Connect(),
 		},
 	)
 
