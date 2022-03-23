@@ -46,7 +46,7 @@ func (th *todoHandler) GetTodoHandler(params todo.GetTodoParams) middleware.Resp
 // GetTodoListHandler implements TodoHandler
 func (th *todoHandler) GetTodoListHandler(params todo.GetTodoListParams) middleware.Responder {
 	res := models.TodoList{}
-	th.Usecase.ReadTodo(res)
+	th.Usecase.ReadTodo(&res)
 	return todo.NewGetTodoListOK().WithPayload(res)
 }
 

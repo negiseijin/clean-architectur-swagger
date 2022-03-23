@@ -3,11 +3,13 @@ package usecase
 import (
 	"time"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/google/uuid"
 	"github.com/negiseijin/clean-architectur-swagger/domain/model"
 	"github.com/negiseijin/clean-architectur-swagger/domain/repository"
 	"github.com/negiseijin/clean-architectur-swagger/gen/models"
 	"github.com/negiseijin/clean-architectur-swagger/gen/restapi/operations/todo"
+	"github.com/negiseijin/clean-architectur-swagger/helpers"
 	"github.com/negiseijin/clean-architectur-swagger/infrastructure/persistence"
 )
 
@@ -65,10 +67,32 @@ func (u *todoUsecase) FindTodo(params todo.GetTodoParams, item interface{}) erro
 
 // ReadTodo implements repository.TodoRepository
 func (u *todoUsecase) ReadTodo(item interface{}) error {
-	err := u.Repo.Read(model.Todo{}, item)
+	var results []map[string]interface{}
+	results, err := u.Repo.Read(model.Todo{})
 	if err != nil {
 		return err
 	}
+	res := []model.Todo{}
+	err = helpers.NewJsonHelper().Marshal(results, &res)
+	if err != nil {
+		return err
+	}
+
+	switch t := item.(type) {
+	case *models.TodoList:
+		s := models.TodoList{}
+		for _, v := range res {
+			s = append(s, &models.Todo{
+				CreatedAt: strfmt.Date(v.CreatedAt),
+				Done:      &v.Done,
+				ID:        strfmt.UUID(v.ID.String()),
+				Name:      v.Name,
+				UpdatedAt: strfmt.Date(v.UpdatedAt),
+			})
+		}
+		*t = s
+	}
+
 	return nil
 }
 
