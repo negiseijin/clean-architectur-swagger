@@ -4,5 +4,12 @@
       "swagger/*.yaml",
       "swagger/*.yml"
     ]
-  }
+  },
+  "yaml.format.enable": true,
+  "yaml.format.singleQuote": false,
+  "yaml.hover": true,
+  "yaml.schemaStore.enable": true,
+  "yaml.completion": true,
+  "yaml.validate": true,
+  "yaml.format.bracketSpacing": true
 }
