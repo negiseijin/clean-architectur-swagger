@@ -13,7 +13,7 @@
       "label": "swagger.mdを作成する",
       "detail": "swagger markdown generate",
       "type": "shell",
-      "command": "swagger generate markdown -t gen -f ./swagger/swagger.yml --output=./swagger/swagger.md"
+      "command": "swagger generate markdown -f ./swagger/swagger.yml --output=./swagger/swagger.md"
     },
     {
       "label": "swagger.ymlのvalidateをチェックする",
