@@ -67,13 +67,13 @@ func (u *todoUsecase) FindTodo(params todo.GetTodoParams, item interface{}) erro
 
 // ReadTodo implements repository.TodoRepository
 func (u *todoUsecase) ReadTodo(item interface{}) error {
-	var results []map[string]interface{}
 	results, err := u.Repo.Read(model.Todo{})
 	if err != nil {
 		return err
 	}
+
 	res := []model.Todo{}
-	err = helpers.NewJsonHelper().Marshal(results, &res)
+	err = helpers.NewHelpers().JsonToStruct(results, &res)
 	if err != nil {
 		return err
 	}

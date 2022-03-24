@@ -6,11 +6,11 @@ import (
 	"github.com/negiseijin/clean-architectur-swagger/domain/repository"
 )
 
-type JsonHelper struct {
+type Helpers struct {
 }
 
-// Marshal implements repository.JsonRepository
-func (*JsonHelper) Marshal(i interface{}, v interface{}) error {
+// JsonToStruct implements repository.HelpersRepository
+func (*Helpers) JsonToStruct(i interface{}, v interface{}) error {
 	b, err := json.Marshal(i)
 	if err != nil {
 		return err
@@ -23,11 +23,6 @@ func (*JsonHelper) Marshal(i interface{}, v interface{}) error {
 	return nil
 }
 
-// Unmarshal implements repository.JsonRepository
-func (*JsonHelper) Unmarshal(item interface{}) error {
-	panic("unimplemented")
-}
-
-func NewJsonHelper() repository.JsonRepository {
-	return &JsonHelper{}
+func NewHelpers() repository.HelpersRepository {
+	return &Helpers{}
 }

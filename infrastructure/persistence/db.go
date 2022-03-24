@@ -50,8 +50,8 @@ func (repo *DBRepository) Migrate(item interface{}) error {
 
 // Read implements repository.DBRepository
 func (repo *DBRepository) Read(model interface{}) ([]map[string]interface{}, error) {
-	db := repo.DB.Debug().Model(model)
 	var results []map[string]interface{}
+	db := repo.DB.Debug().Model(model)
 	db.Find(&results)
 	if db.Error != nil {
 		return nil, db.Error
